@@ -1,33 +1,64 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect } from 'react'
 import './App.css'
+import SearchBar from './components/SearchBar'
+import MovieList from './components/MovieList'
+import { fetchMovies } from './api/tmdb'
+import { fetchPopularMovies } from './api/tmdb'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [query, setQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    async function doFetch() {
+      try {
+        const fetchedMovies = await fetchMovies(query);
+        setMovies(fetchedMovies)
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    doFetch();
+  }, [query]);
+
+//popular movies, run first
+  useEffect(() => {
+    setLoading(true);
+    async function doFetchPopularMovies() {
+      try {
+        const fetchedMovies = await fetchPopularMovies();
+        setMovies(fetchedMovies)
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    doFetchPopularMovies();
+  }, []);
+
+  const handleSearch = (query = "") => {
+    if (!query.trim()) return
+    setQuery(query);
+    setMovies([]);
+    setLoading(true);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <SearchBar onSearch={handleSearch} />
+        <MovieList movies={movies} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
