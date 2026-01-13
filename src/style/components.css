@@ -14,7 +14,7 @@
 .searchbar input {
     width: 50%;
     height: 40px;
-    background-image: url(img/search.png);
+    background-image: url(/src/assets/search.png);
     background-repeat: no-repeat;
     font-size: 1.1rem;
     margin: 0 20px;
@@ -88,8 +88,9 @@ img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  opacity: 0.5;
+ /* opacity: 0.5;*/
   transition: 1000ms;
+  cursor: pointer;
 }
 
 .details{
@@ -138,4 +139,14 @@ p{
 .visible{
     transform: translateX(0);
     opacity: 1;
+}
+
+
+.casts{
+      font-size: 1.2rem;
+    }
+    .see-more{
+    font-weight: bold;  
+    font-size: 1rem;
+    cursor: pointer;
 }
