@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import MovieList from './components/MovieList'
+import Loader from './components/Loader'
 import { fetchMovies, fetchPopularMovies } from './api/tmdb'
 
 
@@ -51,6 +52,10 @@ function App() {
     if (!query.trim()) return
     setQuery(query);
     setMovies([]);
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
