@@ -14,12 +14,18 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // helper delay function
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   useEffect(() => {
     if (!query.trim()) return;
     setLoading(true);
     async function doFetch() {
       try {
         const fetchedMovies = await fetchMovies(query);
+        await delay(1000); // legalább 1000ms
         setMovies(fetchedMovies)
       } catch (err) {
         setError(err);
@@ -31,12 +37,13 @@ function App() {
     doFetch();
   }, [query]);
 
-//popular movies, run first
+  //popular movies, run first
   useEffect(() => {
     setLoading(true);
     async function doFetchPopularMovies() {
       try {
         const fetchedMovies = await fetchPopularMovies();
+        await delay(1000); // legalább 1000ms
         setMovies(fetchedMovies)
       } catch (err) {
         setError(err);
