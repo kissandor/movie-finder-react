@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import MovieList from './components/MovieList'
-import { fetchMovies } from './api/tmdb'
-import { fetchPopularMovies } from './api/tmdb'
+import { fetchMovies, fetchPopularMovies } from './api/tmdb'
+
 
 function App() {
 
@@ -14,6 +14,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!query.trim()) return;
     setLoading(true);
     async function doFetch() {
       try {
@@ -50,7 +51,6 @@ function App() {
     if (!query.trim()) return
     setQuery(query);
     setMovies([]);
-    setLoading(true);
   }
 
   return (
