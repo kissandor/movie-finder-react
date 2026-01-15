@@ -13,7 +13,6 @@ export async function fetchPopularMovies() {
   try {
     const response = await fetch(`${BASE_URL}/movie/popular`, options);
     const data = await response.json();
-    console.log(data.results);
     return data.results;
   } catch (err) {
     console.log(err);
@@ -26,7 +25,6 @@ export async function fetchMovies(query, page = 1) {
   try {
     const response = await fetch(`${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`, options);
     const data = await response.json();
-    console.log(data);
     return data.results;
   } catch (err) {
     console.log(err);
@@ -34,4 +32,13 @@ export async function fetchMovies(query, page = 1) {
   }
 }
 
-
+export async function fetchOneMovieCastById(movie_id)  {
+  try {
+    const response = await fetch(`${BASE_URL}/movie/${movie_id}/credits?language=en-US`, options);
+    const data = await response.json();
+    return data.cast;
+  } catch (err) {
+    console.log(err);
+    return (err);
+  }
+}

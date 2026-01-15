@@ -40,10 +40,10 @@ function App() {
   //popular movies, run first
   useEffect(() => {
     setLoading(true);
-    async function doFetchPopularMovies() {
+    async function doFetch() {
       try {
         const fetchedMovies = await fetchPopularMovies();
-        await delay(1000); // legalább 1000ms
+        //await delay(1000); // legalább 1000ms
         setMovies(fetchedMovies)
       } catch (err) {
         setError(err);
@@ -52,7 +52,7 @@ function App() {
       }
     }
 
-    doFetchPopularMovies();
+    doFetch();
   }, []);
 
   const handleSearch = (query = "") => {
