@@ -159,7 +159,7 @@ p {
 .cast-item {
     opacity: 0; /* kezdetben láthatatlan */
     transform: translateY(10px); /* kicsit lejjebb */
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* animáció */
+    transition: opacity 0.9s ease-out, transform 0.5s ease-out; /* animáció */
     margin-top: 5px;
 }
 

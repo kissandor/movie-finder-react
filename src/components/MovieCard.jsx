@@ -16,7 +16,6 @@ function MovieCard({ movie }) {
         async function doFetch() {
             try {
                 const fetchedMovieCasts = await fetchOneMovieCastById(movie.id);
-                console.log(fetchedMovieCasts)
                 setCastList(fetchedMovieCasts);
             } catch (err) {
                 console.log(err);

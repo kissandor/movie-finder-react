@@ -5,10 +5,15 @@ function Casts({ castList }) {
     const [visible, setVisible] = useState(false);
 
     // Amikor castList megérkezik, láthatóvá tesszük az elemeket
-    useEffect(() => {
-        if (castList.length > 0) {
+     useEffect(() => {
+        if (castList.length === 0) return;
+
+        setVisible(false); // reset
+        const id = requestAnimationFrame(() => {
             setVisible(true);
-        }
+        });
+
+        return () => cancelAnimationFrame(id);
     }, [castList]);
 
     return (
