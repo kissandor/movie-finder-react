@@ -151,9 +151,21 @@ p {
 }
 
 .cast-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 8px 0px;
+  overflow: hidden;
+  transition: max-height 0.7s ease, opacity 0.7s;
+}
+
+.cast-list.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.cast-list.shown {
+  max-height: 300px; /* elég nagy */
+  opacity: 1;
 }
 
 .cast-item {
@@ -169,3 +181,11 @@ p {
     transform: translateY(0);
 }
 
+.show-hide-btn{
+    border: 2px solid rgb(153, 163, 153);
+    border-radius: 10px;
+    text-align: center;
+    height: 25px;
+    min-width: 100px; 
+    cursor: pointer;
+}

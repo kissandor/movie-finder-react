@@ -38,10 +38,11 @@ function MovieCard({ movie }) {
                 <p className="release-date">{movie.release_date || "Unknown"}</p>
                 <p className="overview">{movie.overview || "No details available"}</p>
                 <div className="casts">
-                    <button onClick={() => setCastVisible(!isCastVisible)}>
-                        {isCastVisible ? "Hide" : "Casts:"}
+                    <button className="show-hide-btn" onClick={() => setCastVisible(prev => !prev)}>
+                        {isCastVisible ? "Hide casts:" : "Show casts:"}
                     </button>
-                    {isCastVisible && <Casts castList={castList} />}
+                    {/* {isCastVisible && <Casts castList={castList} show={isCastVisible}/>} */}
+                    <Casts castList={castList} show={isCastVisible}/>
                 </div>
             </div>
         </div>
