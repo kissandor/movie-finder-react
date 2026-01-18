@@ -55,6 +55,7 @@ function App() {
     doFetch();
   }, []);
 
+
   const handleSearch = (query = "") => {
     if (!query.trim()) return
     setQuery(query);

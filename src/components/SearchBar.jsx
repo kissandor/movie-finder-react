@@ -2,9 +2,10 @@
 import { useState } from 'react'
 import '../style/components.css'
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch}) {
 
     const [query, setQuery] = useState("");
+    // const [key, setKey] = useState("");
 
     return (
         <div className="searchbar">
@@ -14,13 +15,16 @@ function SearchBar({ onSearch }) {
                 placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e)=>{
+                    if (e.key === 'Enter') onSearch(query)
+                }}
             >
             </input>
             <button className="search-btn btn" onClick={() => {
                 if (!query.trim()) return
                 onSearch(query)
-            }
-            }>
+            }}
+            >
                 Search
             </button>
         </div>
