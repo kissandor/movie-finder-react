@@ -13,7 +13,7 @@ export async function fetchPopularMovies() {
   try {
     const response = await fetch(`${BASE_URL}/movie/popular`, options);
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (err) {
     console.log(err);
     return (err);
@@ -25,7 +25,7 @@ export async function fetchMovies(query, page = 1) {
   try {
     const response = await fetch(`${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`, options);
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (err) {
     console.log(err);
     return (err);

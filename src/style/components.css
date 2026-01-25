@@ -58,7 +58,7 @@
 }
 
 .movie-list {
-    width: 100%;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,7 +115,13 @@ p {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
+    height: 100%;
     transform: translate(-50%, -50%);
+    background-color:rgb(242, 242, 242, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .loader {
