@@ -49,7 +49,12 @@ function App() {
     async function doFetch() {
       try {
         setLoading(true);
-        const fetchedMovies = await fetchMovies(query, nextPage);
+        let fetchedMovies = null;
+        if(query.length>0) {
+          fetchedMovies = await fetchMovies(query, nextPage);
+        } else {
+          fetchedMovies = await fetchPopularMovies(nextPage);
+        }
         console.log(`Page : ${nextPage}`)
         await delay(1000); // legalább 1000ms
         setMovies(prev => [...prev, ...fetchedMovies.results])
@@ -64,7 +69,7 @@ function App() {
     }
 
     doFetch();
-  }, [canLoadNextPage]);
+  }, [canLoadNextPage, query.length]);
 
 
   useEffect(() => {
@@ -139,8 +144,8 @@ function App() {
         <SearchBar onSearch={handleSearch} />
         <MovieList movies={movies} />
       {movies.length > 0 && <div className="sentinel" ref={sentinelRef}></div>}
-      </div>
       {loading ? <Loader /> : <div></div>}
+      </div>
     </>
   )
 }

@@ -9,9 +9,9 @@ const options = {
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export async function fetchPopularMovies() {
+export async function fetchPopularMovies(page=1) {
   try {
-    const response = await fetch(`${BASE_URL}/movie/popular`, options);
+    const response = await fetch(`${BASE_URL}/movie/popular?page=${page}`, options);
     const data = await response.json();
     return data;
   } catch (err) {
