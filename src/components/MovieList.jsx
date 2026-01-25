@@ -1,7 +1,8 @@
 import MovieCard from './MovieCard'
 import '../style/components.css'
 
-function MovieList({ movies }) {
+
+function MovieList({ movies, sentinelRef }) {
     return (
         <div className="movie-list">
             {
@@ -10,6 +11,7 @@ function MovieList({ movies }) {
                 }
                 )
             }
+            <div className="sentinel" ref={sentinelRef}></div>
         </div>
     )
 }

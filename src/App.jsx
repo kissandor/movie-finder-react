@@ -19,6 +19,28 @@ function App() {
   const sentinelRef = useRef(null)
 
 
+  //popular movies, run first
+  useEffect(() => {
+    setLoading(true);
+    setPage(1);
+    setTotalPages(1);
+    async function doFetch() {
+      try {
+        const fetchedMovies = await fetchPopularMovies();
+        await delay(1000); // legalább 1000ms
+        setMovies(fetchedMovies.results)
+        setTotalPages(fetchedMovies.total_pages)
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+        setCanLoadNextPage(false)
+      }
+    }
+    doFetch();
+  }, []);
+
+
   useEffect(() => {
     if (!canLoadNextPage) return
 
@@ -28,6 +50,7 @@ function App() {
       try {
         setLoading(true);
         const fetchedMovies = await fetchMovies(query, nextPage);
+        console.log(`Page : ${nextPage}`)
         await delay(1000); // legalább 1000ms
         setMovies(prev => [...prev, ...fetchedMovies.results])
         setPage(nextPage)
@@ -48,11 +71,12 @@ function App() {
     if (error) return;
     if (loading) return;
     if (!isSentinelVisible) return;
+    if (movies.length === 0) return;
     if (page >= totalPages) return;
     if (canLoadNextPage) return;
     setCanLoadNextPage(true)
 
-  }, [isSentinelVisible, loading, totalPages, page, error])
+  }, [isSentinelVisible, loading, totalPages, page, error, movies.length])
 
 
   //ez csak figyeli a szentinel elemet es jele
@@ -62,19 +86,19 @@ function App() {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => setIsSentinelVisible(entry.isIntersecting))
+      console.log("I see you")
     }, {
       root: null,
-      rootMargin: '200px 0px',
+      rootMargin: '10px',
       threshold: 0,
     });
 
     observer.observe(node)
-   
-    
+
     return () => {
       observer.disconnect();
     }
-  }, [movies])
+  }, [movies.length])
 
   // helper delay function
   function delay(ms) {
@@ -89,7 +113,7 @@ function App() {
     async function doFetch() {
       try {
         const fetchedMovies = await fetchMovies(query);
-       await delay(1000); // legalább 1000ms
+        await delay(1000); // legalább 1000ms
         setMovies(fetchedMovies.results);
         setTotalPages(fetchedMovies.total_pages);
       } catch (err) {
@@ -102,25 +126,6 @@ function App() {
     doFetch();
   }, [query]);
 
-  //popular movies, run first
-  useEffect(() => {
-    setLoading(true);
-    setPage(1);
-    setTotalPages(1);
-    async function doFetch() {
-      try {
-        const fetchedMovies = await fetchPopularMovies();
-        await delay(1000); // legalább 1000ms
-        setMovies(fetchedMovies.results)
-        setTotalPages(fetchedMovies.total_pages)
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    doFetch();
-  }, []);
 
   const handleSearch = (query = "") => {
     if (!query.trim()) return
@@ -133,9 +138,9 @@ function App() {
       <div className="container">
         <SearchBar onSearch={handleSearch} />
         <MovieList movies={movies} />
-        <div className="sentinel" ref={sentinelRef}></div>
+      {movies.length > 0 && <div className="sentinel" ref={sentinelRef}></div>}
       </div>
-      {loading? <Loader /> : <div></div>}
+      {loading ? <Loader /> : <div></div>}
     </>
   )
 }
