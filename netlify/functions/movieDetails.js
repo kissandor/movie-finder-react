@@ -2,9 +2,10 @@ import { tmdbFetch } from './_tmdb.js';
 
 export async function handler(event) {
   try {
-    const id = event.path.split('/').pop();
-
-    const data = await tmdbFetch(`/movie/${id}`);
+    const parts = event.path.split('/');
+    const id = parts[parts.length-2]
+    
+    const data = await tmdbFetch(`/movie/${id}/credits`);
 
     return {
       statusCode: 200,

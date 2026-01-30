@@ -11,7 +11,10 @@ export async function fetchMovies(query, page = 1) {
 }
 
 export async function fetchOneMovieCastById(id) {
-    const res = await fetch(`/api/movie/${id}`);
+    const res = await fetch(`/api/movieDetails/${id}/credits`);
     if (!res.ok) throw new Error('Failed to fetch movie by id');
-    return res.json();
+    
+    const data = await res.json();
+    console.log(data.cast)
+    return data.cast;
 }
