@@ -1,8 +1,15 @@
+import Error  from './Error'
 import MovieCard from './MovieCard'
 import '../style/components.css'
 
 
-function MovieList({ movies, sentinelRef }) {
+function MovieList({ movies, error}) {
+
+
+    if (error) {
+        return <Error err={error}/>
+    }
+
     return (
         <div className="movie-list">
             {
@@ -11,7 +18,6 @@ function MovieList({ movies, sentinelRef }) {
                 }
                 )
             }
-            <div className="sentinel" ref={sentinelRef}></div>
         </div>
     )
 }

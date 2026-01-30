@@ -1,4 +1,4 @@
-const options = {
+/*const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -16,7 +16,7 @@ export async function fetchPopularMovies(page=1) {
     return data;
   } catch (err) {
     console.log(err);
-    return (err);
+    throw err
   }
 }
 
@@ -27,8 +27,7 @@ export async function fetchMovies(query, page = 1) {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.log(err);
-    return (err);
+    throw err
   }
 }
 
@@ -38,7 +37,7 @@ export async function fetchOneMovieCastById(movie_id)  {
     const data = await response.json();
     return data.cast;
   } catch (err) {
-    console.log(err);
-    return (err);
+    throw err
   }
 }
+*/

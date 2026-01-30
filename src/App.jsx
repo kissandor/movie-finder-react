@@ -3,7 +3,8 @@ import './App.css'
 import SearchBar from './components/SearchBar'
 import MovieList from './components/MovieList'
 import Loader from './components/Loader'
-import { fetchMovies, fetchPopularMovies } from './api/tmdb'
+//import { fetchMovies, fetchPopularMovies } from './api/tmdb'
+import { fetchPopularMovies } from './api/movies'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
   //popular movies, run first
   useEffect(() => {
     setLoading(true);
+    setError(null);
     setPage(1);
     setTotalPages(1);
     async function doFetch() {
@@ -40,7 +42,7 @@ function App() {
     doFetch();
   }, []);
 
-
+/*
   useEffect(() => {
     if (!canLoadNextPage) return
 
@@ -50,7 +52,7 @@ function App() {
       try {
         setLoading(true);
         let fetchedMovies = null;
-        if(query.length>0) {
+        if (query.length > 0) {
           fetchedMovies = await fetchMovies(query, nextPage);
         } else {
           fetchedMovies = await fetchPopularMovies(nextPage);
@@ -69,14 +71,14 @@ function App() {
     }
 
     doFetch();
-  }, [canLoadNextPage, query.length]);
+  }, [canLoadNextPage, query]);
 
 
   useEffect(() => {
     if (error) return;
     if (loading) return;
     if (!isSentinelVisible) return;
-    if (movies.length === 0) return;
+    if (!movies || movies.length === 0) return;
     if (page >= totalPages) return;
     if (canLoadNextPage) return;
     setCanLoadNextPage(true)
@@ -123,28 +125,31 @@ function App() {
         setTotalPages(fetchedMovies.total_pages);
       } catch (err) {
         setError(err);
+        console.log("HIBA: " + err);
       } finally {
         setLoading(false);
+        setError(null);
       }
     }
 
     doFetch();
   }, [query]);
 
-
+*/
   const handleSearch = (query = "") => {
     if (!query.trim()) return
     setQuery(query);
     setMovies([]);
   }
 
+
   return (
     <>
       <div className="container">
         <SearchBar onSearch={handleSearch} />
-        <MovieList movies={movies} />
-      {movies.length > 0 && <div className="sentinel" ref={sentinelRef}></div>}
-      {loading ? <Loader /> : <div></div>}
+        <MovieList movies={movies} error={error} />
+        {movies.length > 0 && <div className="sentinel" ref={sentinelRef}></div>}
+        {loading ? <Loader /> : <div></div>}
       </div>
     </>
   )
