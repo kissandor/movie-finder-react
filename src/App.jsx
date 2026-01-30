@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar'
 import MovieList from './components/MovieList'
 import Loader from './components/Loader'
 //import { fetchMovies, fetchPopularMovies } from './api/tmdb'
-import { fetchPopularMovies } from './api/movies'
+import { fetchMovies, fetchPopularMovies } from './api/movies'
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
     doFetch();
   }, []);
 
-/*
+
   useEffect(() => {
     if (!canLoadNextPage) return
 
@@ -135,7 +135,7 @@ function App() {
     doFetch();
   }, [query]);
 
-*/
+
   const handleSearch = (query = "") => {
     if (!query.trim()) return
     setQuery(query);

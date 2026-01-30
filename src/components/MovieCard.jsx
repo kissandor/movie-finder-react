@@ -3,7 +3,7 @@ import defaultPoster from '../assets/default_poster.png'
 import { useState } from 'react';
 import { useEffect } from 'react'
 import Casts from './Casts'
-import { fetchOneMovieCastById } from '../api/tmdb'
+import { fetchOneMovieCastById } from '../api/movies'
 
 function MovieCard({ movie }) {
     const [isCastVisible, setCastVisible] = useState(false);
